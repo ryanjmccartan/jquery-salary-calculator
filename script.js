@@ -2,7 +2,7 @@ $(document).ready(onReady);
 
 function onReady(){
     $('#submitBtn').on('click', addEmployee);
-    $('#deleteBtn').on('click', delEmployee);
+    $('#employeeList').on('click', '.deleteBtn', delEmployee);
     displayEmployees();
 }
 
@@ -32,50 +32,48 @@ function addEmployee(){
     $('#idNumber').val('');
     $('#jobTitle').val('');
     $('#salary').val('');
-
-    $('#monthlyCost').empty();
-    $('#monthlyCost').append(calculateCost(totalSalary));
+    // append the calculation for total monthly cost
+    // $('#monthlyCost').empty();
+    // $('#monthlyCost').append(calculateCost(totalSalary));
 
 }
 
 function displayEmployees(){
+  let totalCost = 0;
   let el = $('#employeeList');
   el.empty();  
+
+  el.append(`<tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Salary</th>
+</tr>`);
   // loop through employee array
   for (let i=0; i<employees.length; i++){
-      let li = `<li>` + employees[i].firstName + ' ' + employees[i].lastName + ' ' + employees[i].idNumber + ' ' 
-      + employees[i].jobTitle + ' ' + employees[i].annualSal + `</li>`;
-      // append to DOM
-      el.append(li);
-  }
-}
-
-
-
-function calculateCost (array){
-    let totalCost = 0;
-    for (let i = 0; i < array.length; i++){
-        totalCost = totalCost + array[i];
-    } 
+      el.append( `<tr> 
+      <td>${employees[i].firstName}</td> 
+      <td>${employees[i].lastName}</td> 
+      <td>${employees[i].idNumber}</td> 
+      <td>${employees[i].jobTitle}</td> 
+      <td>${employees[i].annualSal}</td> 
+      <td><button class="deleteBtn">Delete</button></td>
+      </tr>`);
+    totalCost += Number (employees[i].annualSal);
+    let monthlyCost = $('#monthlyCost');
+    monthlyCost.empty();
+    monthlyCost.append('$' + totalCost / 12 );
     if (totalCost > (salaryLim * 12) ){
         $('#monthlyCost').addClass('error');
     }
-    return (totalCost / 12 );
+    //   // append to DOM
+    //   el.append(li);
+  }
 }
 
-// function calculateCost(array){
-//     let el = $('#monthlyCost');
-//     let totalCost = 0;
-//     el.empty();
-//     for (let i = 0; i<employees.length; i++){
-//         totalCost += employees[i].annualSal;
-//     } 
-//     el.append(totalCost);
-// }
+// `<button class="deleteBtn">Delete</button>`
 
 function delEmployee(){
-
+    console.log('in delEmployee');
 }
-
-
-// issues I had: getting the total salaries to show up as a number
