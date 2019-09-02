@@ -72,8 +72,6 @@ function displayEmployees(){
   }
 }
 
-// `<button class="deleteBtn">Delete</button>`
-
 function delEmployee(){
     $(this).parent().parent().remove();
 }
