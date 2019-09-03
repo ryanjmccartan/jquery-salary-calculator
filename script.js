@@ -67,8 +67,6 @@ function displayEmployees(){
     if (totalCost > (salaryLim * 12) ){
         $('#monthlyCost').addClass('error');
     }
-    //   // append to DOM
-    //   el.append(li);
   }
 }
 
